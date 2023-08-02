@@ -78,7 +78,7 @@ def data_cleaning(*args):
                 prices_c.append(int(price_split))
             price_split = ''
 
-    availability_c = [avail.strip('\n, ') for avail in availability]
+    availability_c = [avail.strip('\n,\r, ') for avail in availability]
 
     return hrefs_c, prices_c, availability_c
 
@@ -93,7 +93,7 @@ def get_available_goods(*args):
 
 
 def write_csv(available_goods, file_name):
-    with open(file_name, 'w', newline='') as file:
+    with open(file_name, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file, delimiter=';')
         writer.writerow(['Link', 'Name', 'Price', 'Avalability'])
         for item in available_goods:
@@ -139,6 +139,8 @@ def main():
     names = []
     prices = []
     availability = []
+
+
 
     page_n = get_last_page_num(html)
 
