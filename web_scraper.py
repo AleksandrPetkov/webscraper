@@ -145,8 +145,11 @@ def main():
     page_n = get_last_page_num(html)
 
     for page in range(1, int(page_n)+1):  # int(page_n)+1
-        html = get_html(URL, params={'page': page})
-        html_code = BeautifulSoup(html.text, features='html.parser')
+        try:
+            html_page = get_html(URL, params={'page': page})
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e)
+        html_code = BeautifulSoup(html_page.text, features='html.parser')
         hrefs += get_goods_href(html_code)
         names += get_goods_names(html_code)
         prices += get_goods_price(html_code)
