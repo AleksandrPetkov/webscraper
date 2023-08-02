@@ -78,7 +78,7 @@ def data_cleaning(*args):
                 prices_c.append(int(price_split))
             price_split = ''
 
-    availability_c = [avail.strip('\n,\r, ') for avail in availability]
+    availability_c = [avail.strip('\n, ') for avail in availability]
 
     return hrefs_c, prices_c, availability_c
 
@@ -112,8 +112,8 @@ def get_cheapest_good(available_goods):
     result = []
     first_good_price = available_goods[0][-2]
     prices_list = [e[-2] for e in available_goods]
+    count = 0
     while first_good_price in prices_list:
-        count = 0
         result.append(available_goods[count])
         prices_list.pop(0)
         count += 1
@@ -157,8 +157,8 @@ def main():
 
     hrefs_c, prices_c, availability_c = data_cleaning(hrefs, prices, availability, HOST)
     available_goods = get_available_goods(hrefs_c, prices_c, names, availability_c)
-    average_price = get_average_price(available_goods)
 
+    average_price = get_average_price(available_goods)
     print(f'1. The average price of {len(available_goods)} goods is {round(average_price, 2)} UAH')
 
     cheapest_good_data = get_cheapest_good(available_goods)
